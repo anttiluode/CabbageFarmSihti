@@ -187,6 +187,50 @@ or an operator written by a slower field.
 
 That is where curved wood grain, mineral domains, branching terrain or other nonstationary material structure could live.
 
+## Site Gate 1 — keep the coarse geometry, regrow the residue
+
+The cabbage test exposed the v0 boundary cleanly: a power-spectrum law can transfer colour/frequency statistics while random phase destroys the spatial relations that make the object recognizable.
+
+The live site now tests a narrower mechanism before attempting whole-object generation:
+
+https://anttiluode.github.io/CabbageFarmSihti/
+
+1. blur the reference into a slow **coarse parent** \(C_{2d}\);
+2. compute its local gradient/tangent frame;
+3. generate fresh coordinate noise;
+4. express that noise relative to the local parent frame;
+5. compare against the same noise with no parent relation and against a **shuffled-parent / wrong-address** control.
+
+The sketch is
+
+\`\`\`math
+C_{2d}(x)
+\longrightarrow
+G_{2d}(x)=[\nabla C,\text{tangent}]
+\longrightarrow
+\widehat R_d(x)=F(G_{2d}(x),\eta_d(x))
+\longrightarrow
+\widehat C_d=C_{2d}+\widehat R_d.
+\`\`\`
+
+The site reports a simple orientation-inheritance diagnostic: how strongly the generated detail-gradient field aligns with the coarse parent's local normal field. That number is only a mechanism probe, not a perceptual-quality metric.
+
+The important attacker is the shuffled-parent panel. It gets the same fresh noise and the same family of local frames, but the frames are bound to the wrong spatial addresses. This imports a recurring lesson from the recent operator work: **having the right ingredients is not enough if their provenance/address relation is wrong.**
+
+This is deliberately a scaffold experiment. The real coarse field is retained, so a recognizable object in the reconstruction does **not** mean the object has been generated. The gate asks only whether a slow parent can causally organize fresh finer-scale structure.
+
+The next scientific version should learn \(F\) from the actual reference residues rather than hand-designing the local orientation rule, then compare:
+
+\`\`\`text
+independent residue law
+vs
+correct-parent conditioned law
+vs
+shuffled-parent conditioned law
+\`\`\`
+
+under matched residue energy and spectrum.
+
 ## Run
 
 Install:

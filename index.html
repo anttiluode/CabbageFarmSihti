@@ -3,33 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CabbageFarmSihti — coarse geometry → local operator → fresh detail</title>
+<title>CabbageFarmSihti — phase-warp dissection</title>
 <style>
-:root{color-scheme:dark;--bg:#0a0f14;--panel:#121a22;--line:#2a3947;--ink:#edf3f7;--muted:#9badba;--a:#94c4ff;--good:#a8e6b0;--warn:#ffd38a}
+:root{color-scheme:dark;--bg:#0a0f14;--panel:#121a22;--line:#2a3947;--ink:#edf3f7;--muted:#9badba;--a:#94c4ff;--warn:#ffd38a}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
-main{max-width:1280px;margin:auto;padding:24px}h1{font-size:clamp(34px,6.7vw,72px);line-height:.95;letter-spacing:-.05em;margin:.25em 0}
-h2{font-size:26px;margin:1.8em 0 .35em}.lead{font-size:19px;max-width:960px;color:var(--muted)}
+main{max-width:1320px;margin:auto;padding:24px}h1{font-size:clamp(34px,6.7vw,72px);line-height:.95;letter-spacing:-.05em;margin:.25em 0}
+h2{font-size:26px;margin:1.8em 0 .35em}.lead{font-size:19px;max-width:1040px;color:var(--muted)}
 .eq,code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.eq{padding:13px 15px;border:1px solid var(--line);background:var(--panel);border-radius:10px;overflow:auto}
-.controls{display:grid;grid-template-columns:1.35fr repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+.controls{display:grid;grid-template-columns:1.35fr repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
 label{display:grid;gap:5px;color:var(--muted)}select,button,input[type=file]{padding:9px;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--ink);font:inherit}input[type=range]{width:100%}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
 .card h3{font-size:14px;font-weight:650;color:var(--muted);margin:0 0 8px}.card p{font-size:12px;color:var(--muted);margin:7px 0 0}
 canvas{width:100%;height:auto;display:block;background:#06090d;border-radius:7px;image-rendering:auto}
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.metric{border-top:1px solid var(--line);padding-top:8px}.metric b{display:block;font-size:22px}.metric span{font-size:12px;color:var(--muted)}
-.note{border-left:3px solid var(--a);padding:5px 14px;color:var(--muted);max-width:1000px;margin:20px 0}.warning{border-left-color:var(--warn)}
+.note{border-left:3px solid var(--a);padding:5px 14px;color:var(--muted);max-width:1040px;margin:20px 0}.warning{border-left-color:var(--warn)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row button{cursor:pointer}.badge{font:12px ui-monospace,monospace;border:1px solid var(--line);padding:4px 7px;border-radius:20px;color:var(--muted)}
 a{color:var(--a)}details{margin:26px 0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}summary{cursor:pointer;font-weight:650}
-@media(max-width:950px){.controls{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:980px){.controls{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){main{padding:15px}.controls,.grid,.metrics{grid-template-columns:1fr}}
 </style>
 </head>
 <body><main>
-<h1>Keep the geometry.<br>Regrow the detail.</h1>
-<p class="lead">The first spectral generator learned colour and frequency statistics but lost the cabbage because random phase destroyed spatial relations. This page tests the next mechanism directly: preserve a slow coarse field, let that field define a local coordinate frame, then express fresh noise relative to the surviving geometry.</p>
-<div class="eq">coarse state C₂d(x) → local frame [∇C, tangent] → fresh coordinate noise η(x) → conditioned residue R̂d(x) → Ĉd = C₂d + R̂d</div>
+<h1>What is the twisted banding?</h1>
+<p class="lead">Turning detail strength up exposed a moiré-adjacent structure. The site now treats that as evidence rather than an ugly artifact: the coarse parent is writing a spatially varying phase field, and a simple oscillatory carrier makes that geometry visible as bent, crowded and stretched bands.</p>
+<div class="eq">R̂d(x)=a(x)·s(φ(x)) &nbsp;&nbsp; where &nbsp;&nbsp; φ(x)=2π[(n(x)·x)/λ + warp·ηslow(x)]</div>
 
-<h2>Gate sketch — does parent geometry matter?</h2>
-<p class="lead">Load any image locally, or use the built-in layered synthetic object. Nothing leaves your browser. The reference is blurred into a coarse parent. The same fresh noise is then rendered three ways: independent of the parent, aligned to the parent's local frame, and aligned to a deliberately misbound/shuffled parent field.</p>
+<h2>Mechanism dissection</h2>
+<p class="lead">Load an image locally. The reference becomes a coarse parent, then the same deterministic noise tape is rendered through the correct parent frame, a wrong-address frame, or no parent frame. Extra panels expose the wrapped phase, local wavevector magnitude |∇φ|, and amplitude envelope a(x).</p>
 
 <section class="controls">
 <label>Reference image
@@ -37,21 +37,37 @@ a{color:var(--a)}details{margin:26px 0;background:var(--panel);border:1px solid 
 <label>Core blur <b id="blurv">9</b>
 <input id="blur" type="range" min="2" max="24" step="1" value="9"></label>
 <label>Detail wavelength <b id="freqv">8.0 px</b>
-<input id="freq" type="range" min="4" max="22" step=".5" value="8"></label>
+<input id="freq" type="range" min="4" max="24" step=".5" value="8"></label>
 <label>Detail strength <b id="strengthv">0.18</b>
-<input id="strength" type="range" min="0" max=".45" step=".01" value=".18"></label>
+<input id="strength" type="range" min="0" max=".55" step=".01" value=".18"></label>
+
+<label>Phase warp <b id="warpv">0.22</b>
+<input id="warp" type="range" min="0" max=".8" step=".02" value=".22"></label>
+<label>Parent-frame smoothing <b id="framev">1</b>
+<input id="frameSmooth" type="range" min="0" max="10" step="1" value="1"></label>
+<label>Carrier
+<select id="carrier">
+<option value="sine">single sine</option>
+<option value="multi" selected>multi-sine</option>
+<option value="phaseNoise">phase-noise</option>
+</select></label>
 <label>Noise seed <b id="seedv">7</b>
 <input id="seed" type="range" min="0" max="50" step="1" value="7"></label>
 </section>
-<div class="row"><button id="reset">built-in scaffold</button><span class="badge">same noise tape in all three controls</span><span class="badge">shuffled parent = wrong address</span></div>
+<div class="row"><button id="reset">built-in scaffold</button><span class="badge">same noise tape in all controls</span><span class="badge">shuffled parent = wrong address</span><span class="badge">high strength reveals operator signature</span></div>
 
 <div class="grid" style="margin-top:14px">
 <div class="card"><h3>Reference</h3><canvas id="reference" width="320" height="240"></canvas><p>Observed finite example.</p></div>
 <div class="card"><h3>Coarse parent C₂d</h3><canvas id="core" width="320" height="240"></canvas><p>Slow geometry retained; fine residue removed.</p></div>
-<div class="card"><h3>True bleed-out (reference − core)</h3><canvas id="trueResidue" width="320" height="240"></canvas><p>What the chosen coarse scale actually discarded.</p></div>
-<div class="card"><h3>Independent fresh detail</h3><canvas id="independent" width="320" height="240"></canvas><p>Fresh noise with a fixed global orientation. No parent relation.</p></div>
-<div class="card"><h3>Parent-conditioned detail</h3><canvas id="conditioned" width="320" height="240"></canvas><p>Fresh noise uses the coarse gradient/tangent as its local frame.</p></div>
-<div class="card"><h3>Shuffled-parent attacker</h3><canvas id="shuffled" width="320" height="240"></canvas><p>Same mechanism and same noise, but local frames come from the wrong places.</p></div>
+<div class="card"><h3>True bleed-out</h3><canvas id="trueResidue" width="320" height="240"></canvas><p>Reference − coarse parent.</p></div>
+
+<div class="card"><h3>Independent fresh detail</h3><canvas id="independent" width="320" height="240"></canvas><p>Fixed global frame: fresh detail does not know the parent.</p></div>
+<div class="card"><h3>Parent-conditioned detail</h3><canvas id="conditioned" width="320" height="240"></canvas><p>Fresh detail is expressed in the correct local parent frame.</p></div>
+<div class="card"><h3>Shuffled-parent attacker</h3><canvas id="shuffled" width="320" height="240"></canvas><p>Same local-frame law, but frame addresses are wrong.</p></div>
+
+<div class="card"><h3>Wrapped phase φ mod 2π</h3><canvas id="phase" width="320" height="240"></canvas><p>The stripe-like object directly. Crowded contours mean compressed phase fronts.</p></div>
+<div class="card"><h3>Local wavevector |∇φ|</h3><canvas id="wavevector" width="320" height="240"></canvas><p>Bright regions have tighter local phase spacing; dark regions are stretched.</p></div>
+<div class="card"><h3>Amplitude envelope a(x)</h3><canvas id="amplitude" width="320" height="240"></canvas><p>Where the coarse parent permits the carrier to have more influence.</p></div>
 </div>
 
 <div class="metrics">
@@ -61,25 +77,24 @@ a{color:var(--a)}details{margin:26px 0;background:var(--panel);border:1px solid 
 <div class="metric"><b id="alignShuffled">—</b><span>shuffled-parent alignment</span></div>
 </div>
 
-<p class="note"><strong>What this tests:</strong> not whether we can generate a whole new cabbage yet. It tests the division of labour suggested by Sihti G4: slow structure carries layout; residues carry finer content. If a fresh residue looks more coherent only when its local transfer frame is attached to the correct coarse parent, then the missing object is a cross-scale relation rather than another global power spectrum.</p>
-<p class="note warning"><strong>Important attacker:</strong> the parent-conditioned panel is allowed to keep the real coarse field. That is a scaffold experiment, not object generation. A later gate has to generate the slow core itself. Also, local orientation is hand-designed here; the next scientific step is to measure which parent features actually predict the real residue and learn that transfer rule from data.</p>
+<p class="note"><strong>Interpretation:</strong> the high-strength twisted bands are not evidence that the image contains a hidden moiré pattern. They expose the current generator's internal geometry. A spatially varying orientation field is being inserted into an oscillatory phase law; its level sets bend and locally crowd. The banding is therefore a signature of the transfer operator we chose.</p>
+<p class="note warning"><strong>New attacker:</strong> increase parent-frame smoothing. If the violent twisting collapses while coarse alignment survives, the strongest bands were caused by rapid non-integrable changes of the pointwise frame rather than by useful texture structure. Then switch from <em>multi-sine</em> to <em>phase-noise</em>: if the parent relation remains visible without regular stripes, the parent-conditioned mechanism survives the carrier attack.</p>
 
-<h2>Why this came out of the recent repos</h2>
-<div class="eq">Sihti: core vs residue &nbsp; + &nbsp; Sihti2: geometry is an operator &nbsp; + &nbsp; FrequencyAddressed...: rewrite in the resident basis &nbsp; + &nbsp; AInstein: address/provenance must stay bound</div>
-<p class="lead">The shuffled-parent panel is the crucial control. It keeps the same amount of local geometry and the same fresh noise but binds the detail law to the wrong parent locations. If correct parentage matters, this is the visual analogue of the address-misbinding attackers that killed otherwise confident mechanisms in the recent operator work.</p>
+<h2>What we have actually learned</h2>
+<div class="eq">coarse geometry → local phase/operator → visible fine structure</div>
+<p class="lead">That is weaker than natural texture synthesis but stronger than the failed global PSD generator. The slow state is not handing us the missing pixels; it is changing the local rule under which fresh randomness is expressed. The next scientific gate is to replace this hand-designed phase law with a relation learned from real parent/residue pairs and demand that correct parent binding beat both independent and shuffled-parent controls under matched energy and spectrum.</p>
 
 <details>
-<summary>v0 spectral field — the baseline that failed on cabbage shape</summary>
-<p>The original site experiment is retained conceptually: a finite reference can define a stationary 2-D spectral law and fresh random phase can make arbitrarily large fields with matched second-order statistics. That is still useful for granite/cloud-like stationary texture, but phase scrambling showed why it cannot reproduce a structured object such as the cabbage.</p>
-<div class="eq">|H(kx,ky)| + random phase → matched spectrum, not necessarily matched shape</div>
+<summary>Why this is “moiré-adjacent” rather than ordinary moiré</summary>
+<p>Classical moiré usually comes from interference between two periodic structures. Here one carrier is enough. The parent changes the local phase direction, so the local wavevector <code>k(x)=∇φ(x)</code> bends, compresses and stretches. Similar visible bands can arise without two lattices. The site therefore uses the descriptive name <strong>phase-warp banding</strong>, not a claim of classical moiré.</p>
 </details>
 
-<p><a href="https://github.com/anttiluode/CabbageFarmSihti">source</a> · live branch: coarse geometry → local operator → conditioned residue</p>
+<p><a href="https://github.com/anttiluode/CabbageFarmSihti">source</a> · live experiment: phase-warp dissection</p>
 
 <script>
 (()=>{
 const CW=160,CH=120;
-const ids=["reference","core","trueResidue","independent","conditioned","shuffled"];
+const ids=["reference","core","trueResidue","independent","conditioned","shuffled","phase","wavevector","amplitude"];
 const canv={};for(const id of ids)canv[id]=document.getElementById(id);
 let ref=syntheticReference(CW,CH);
 
@@ -95,7 +110,9 @@ function valueNoise(x,y,seed){
  return ((a+(b-a)*tx)*(1-ty)+(c+(d-c)*tx)*ty)*2-1;
 }
 function fbm(x,y,seed){
- let s=0,a=.55,f=1,n=0;for(let o=0;o<4;o++){s+=a*valueNoise(x*f,y*f,seed+o*97);n+=a;a*=.5;f*=2}return s/n;
+ let s=0,a=.55,f=1,n=0;
+ for(let o=0;o<4;o++){s+=a*valueNoise(x*f,y*f,seed+o*97);n+=a;a*=.5;f*=2}
+ return s/n;
 }
 function syntheticReference(w,h){
  const a=new Float64Array(w*h*3),cx=.50*w,cy=.53*h;
@@ -104,12 +121,9 @@ function syntheticReference(w,h){
    let edge=1/(1+Math.exp((r-1.0)*38));
    let warp=.08*Math.sin(5*th+1.7*r)+.04*Math.sin(11*th-2.1*r);
    let rings=Math.sin(38*(r+warp)+2.2*Math.sin(3*th));
-   let folds=Math.sin(18*(r+0.08*Math.sin(4*th))+4*th);
+   let folds=Math.sin(18*(r+.08*Math.sin(4*th))+4*th);
    let stem=Math.exp(-Math.pow((x-cx)/(w*.08),2))*Math.exp(-Math.pow((y-h*.68)/(h*.33),4));
-   let n=fbm(x*.05,y*.05,19);
-   let structure=edge*(.52+.17*rings+.08*folds+.07*n);
-   let p=3*(y*w+x);
-   let bg=.985;
+   let n=fbm(x*.05,y*.05,19),structure=edge*(.52+.17*rings+.08*folds+.07*n),p=3*(y*w+x),bg=.985;
    a[p]=clamp(bg*(1-edge)+edge*(.77+.15*structure+.12*stem));
    a[p+1]=clamp(bg*(1-edge)+edge*(.82+.16*structure+.09*stem));
    a[p+2]=clamp(bg*(1-edge)+edge*(.28+.10*structure+.34*stem));
@@ -117,16 +131,22 @@ function syntheticReference(w,h){
  return a;
 }
 function boxBlur(src,w,h,r){
- let a=new Float64Array(src),tmp=new Float64Array(src.length),out=new Float64Array(src.length);
- r=Math.max(1,Math.round(r));
+ let a=new Float64Array(src),tmp=new Float64Array(src.length),out=new Float64Array(src.length);r=Math.max(1,Math.round(r));
  for(let c=0;c<3;c++){
-  for(let y=0;y<h;y++){let sum=0;for(let x=-r;x<=r;x++){let xx=Math.max(0,Math.min(w-1,x));sum+=a[3*(y*w+xx)+c]}
-   for(let x=0;x<w;x++){tmp[3*(y*w+x)+c]=sum/(2*r+1);let xl=Math.max(0,x-r),xr=Math.min(w-1,x+r+1);sum+=a[3*(y*w+xr)+c]-a[3*(y*w+xl)+c]}
-  }
-  for(let x=0;x<w;x++){let sum=0;for(let y=-r;y<=r;y++){let yy=Math.max(0,Math.min(h-1,y));sum+=tmp[3*(yy*w+x)+c]}
-   for(let y=0;y<h;y++){out[3*(y*w+x)+c]=sum/(2*r+1);let yt=Math.max(0,y-r),yb=Math.min(h-1,y+r+1);sum+=tmp[3*(yb*w+x)+c]-tmp[3*(yt*w+x)+c]}
-  }
+  for(let y=0;y<h;y++){let sum=0;for(let x=-r;x<=r;x++)sum+=a[3*(y*w+Math.max(0,Math.min(w-1,x)))+c];
+   for(let x=0;x<w;x++){tmp[3*(y*w+x)+c]=sum/(2*r+1);let xl=Math.max(0,x-r),xr=Math.min(w-1,x+r+1);sum+=a[3*(y*w+xr)+c]-a[3*(y*w+xl)+c]}}
+  for(let x=0;x<w;x++){let sum=0;for(let y=-r;y<=r;y++)sum+=tmp[3*(Math.max(0,Math.min(h-1,y))*w+x)+c];
+   for(let y=0;y<h;y++){out[3*(y*w+x)+c]=sum/(2*r+1);let yt=Math.max(0,y-r),yb=Math.min(h-1,y+r+1);sum+=tmp[3*(yb*w+x)+c]-tmp[3*(yt*w+x)+c]}}
  }
+ return out;
+}
+function blurScalar(src,w,h,r){
+ if(r<=0)return new Float64Array(src);
+ let tmp=new Float64Array(src.length),out=new Float64Array(src.length);r=Math.round(r);
+ for(let y=0;y<h;y++){let sum=0;for(let x=-r;x<=r;x++)sum+=src[y*w+Math.max(0,Math.min(w-1,x))];
+  for(let x=0;x<w;x++){tmp[y*w+x]=sum/(2*r+1);let xl=Math.max(0,x-r),xr=Math.min(w-1,x+r+1);sum+=src[y*w+xr]-src[y*w+xl]}}
+ for(let x=0;x<w;x++){let sum=0;for(let y=-r;y<=r;y++)sum+=tmp[Math.max(0,Math.min(h-1,y))*w+x];
+  for(let y=0;y<h;y++){out[y*w+x]=sum/(2*r+1);let yt=Math.max(0,y-r),yb=Math.min(h-1,y+r+1);sum+=tmp[yb*w+x]-tmp[yt*w+x]}}
  return out;
 }
 function luminance(a,w,h){let z=new Float64Array(w*h);for(let i=0;i<w*h;i++)z[i]=.2126*a[3*i]+.7152*a[3*i+1]+.0722*a[3*i+2];return z}
@@ -137,54 +157,69 @@ function gradients(z,w,h){
 }
 function normalizeFrame(gx,gy){
  let nx=new Float64Array(gx.length),ny=new Float64Array(gx.length),mag=new Float64Array(gx.length);
- for(let i=0;i<gx.length;i++){let m=Math.hypot(gx[i],gy[i]);mag[i]=m;if(m>1e-5){nx[i]=gx[i]/m;ny[i]=gy[i]/m}else{nx[i]=1;ny[i]=0}}
+ for(let i=0;i<gx.length;i++){let m=Math.hypot(gx[i],gy[i]);mag[i]=m;if(m>1e-6){nx[i]=gx[i]/m;ny[i]=gy[i]/m}else{nx[i]=1;ny[i]=0}}
  return {nx,ny,mag};
 }
 function residueDisplay(r){
  let q=[];for(let i=0;i<r.length;i++)q.push(Math.abs(r[i]));q.sort((a,b)=>a-b);let s=q[Math.floor(.985*q.length)]||1,out=new Float64Array(r.length);
  for(let i=0;i<r.length;i++)out[i]=clamp(.5+.48*r[i]/s);return out;
 }
-function generatedResidue(frame,mode,w,h,seed,wavelength,strength){
- let out=new Float64Array(w*h*3),phaseSeed=seed+337,shiftX=37,shiftY=29;
- for(let y=0;y<h;y++)for(let x=0;x<w;x++){
-   let i=y*w+x,fi=i;
-   if(mode==="shuffled")fi=((y+shiftY)%h)*w+((x+shiftX)%w);
-   let nx,ny;
-   if(mode==="independent"){let ang=.63;nx=Math.cos(ang);ny=Math.sin(ang)}
-   else{nx=frame.nx[fi];ny=frame.ny[fi]}
-   let slow=fbm(x*.045,y*.045,phaseSeed),phase=2*Math.PI*((nx*x+ny*y)/wavelength+.22*slow);
-   let carrier=Math.sin(phase)+.36*Math.sin(2.07*phase+1.7)+.18*Math.sin(3.9*phase-.4);
-   let edgeBoost=.55+.75*Math.min(1,frame.mag[i]*95);
-   let v=strength*edgeBoost*carrier/1.54;
-   out[3*i]=v*.72;out[3*i+1]=v*.82;out[3*i+2]=v*.38;
- }
+function scalarDisplay(z,symmetric=false){
+ let out=new Float64Array(z.length*3),vals=Array.from(z);
+ if(symmetric){let q=vals.map(Math.abs).sort((a,b)=>a-b),s=q[Math.floor(.99*q.length)]||1;for(let i=0;i<z.length;i++){let v=clamp(.5+.48*z[i]/s);out[3*i]=out[3*i+1]=out[3*i+2]=v}}
+ else{vals.sort((a,b)=>a-b);let lo=vals[Math.floor(.01*vals.length)],hi=vals[Math.floor(.99*vals.length)],den=Math.max(hi-lo,1e-12);for(let i=0;i<z.length;i++){let v=clamp((z[i]-lo)/den);out[3*i]=out[3*i+1]=out[3*i+2]=v}}
  return out;
+}
+function makeField(frame,mode,w,h,seed,wavelength,strength,warpStrength,carrier){
+ let residue=new Float64Array(w*h*3),phase=new Float64Array(w*h),amp=new Float64Array(w*h),shiftX=37,shiftY=29,phaseSeed=seed+337;
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+   let i=y*w+x,fi=i;if(mode==="shuffled")fi=((y+shiftY)%h)*w+((x+shiftX)%w);
+   let nx,ny;if(mode==="independent"){let ang=.63;nx=Math.cos(ang);ny=Math.sin(ang)}else{nx=frame.nx[fi];ny=frame.ny[fi]}
+   let slow=fbm(x*.045,y*.045,phaseSeed);
+   let ph=2*Math.PI*((nx*x+ny*y)/wavelength+warpStrength*slow);phase[i]=ph;
+   let carrierValue;
+   if(carrier==="sine")carrierValue=Math.sin(ph);
+   else if(carrier==="phaseNoise")carrierValue=.72*Math.sin(ph+1.7*fbm(x*.11,y*.11,phaseSeed+911))+.28*fbm(x*.19,y*.19,phaseSeed+1231);
+   else carrierValue=(Math.sin(ph)+.36*Math.sin(2.07*ph+1.7)+.18*Math.sin(3.9*ph-.4))/1.54;
+   let edgeBoost=.55+.75*Math.min(1,frame.mag[i]*95),a=strength*edgeBoost;amp[i]=a;
+   let v=a*carrierValue;residue[3*i]=v*.72;residue[3*i+1]=v*.82;residue[3*i+2]=v*.38;
+ }
+ return {residue,phase,amp};
 }
 function combine(core,r){let out=new Float64Array(core.length);for(let i=0;i<out.length;i++)out[i]=clamp(core[i]+r[i]);return out}
 function alignmentFromRGB(rgb,frame,w,h){
  const z=luminance(rgb,w,h),g=gradients(z,w,h);let num=0,den=0;
- for(let i=0;i<w*h;i++){let dm=Math.hypot(g.gx[i],g.gy[i]),pm=frame.mag[i];if(dm<1e-5||pm<1e-5)continue;let c=(g.gx[i]*frame.nx[i]+g.gy[i]*frame.ny[i])/dm;let wt=dm*Math.min(pm*60,1);num+=wt*c*c;den+=wt}
+ for(let i=0;i<w*h;i++){let dm=Math.hypot(g.gx[i],g.gy[i]),pm=frame.mag[i];if(dm<1e-5||pm<1e-5)continue;let c=(g.gx[i]*frame.nx[i]+g.gy[i]*frame.ny[i])/dm,wt=dm*Math.min(pm*60,1);num+=wt*c*c;den+=wt}
  return den?num/den:0;
 }
-function alignmentResidue(res,frame,w,h){
- let rgb=new Float64Array(res.length);for(let i=0;i<res.length;i++)rgb[i]=.5+res[i];return alignmentFromRGB(rgb,frame,w,h);
-}
+function alignmentResidue(res,frame,w,h){let rgb=new Float64Array(res.length);for(let i=0;i<res.length;i++)rgb[i]=.5+res[i];return alignmentFromRGB(rgb,frame,w,h)}
+function wavevectorMagnitude(phase,w,h){let g=gradients(phase,w,h),m=new Float64Array(w*h);for(let i=0;i<m.length;i++)m[i]=Math.hypot(g.gx[i],g.gy[i]);return m}
+function wrappedPhaseDisplay(phase){let out=new Float64Array(phase.length*3);for(let i=0;i<phase.length;i++){let v=.5+.5*Math.sin(phase[i]);out[3*i]=.20+.70*v;out[3*i+1]=.12+.72*(1-v);out[3*i+2]=.45+.45*Math.sin(phase[i]+2.1)*.5+.22}return out}
 function draw(canvas,a,w,h){
  let ctx=canvas.getContext("2d"),tmp=document.createElement("canvas");tmp.width=w;tmp.height=h;let tc=tmp.getContext("2d"),im=tc.createImageData(w,h);
  for(let i=0;i<w*h;i++){im.data[4*i]=Math.round(255*clamp(a[3*i]));im.data[4*i+1]=Math.round(255*clamp(a[3*i+1]));im.data[4*i+2]=Math.round(255*clamp(a[3*i+2]));im.data[4*i+3]=255}
  tc.putImageData(im,0,0);ctx.imageSmoothingEnabled=true;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(tmp,0,0,canvas.width,canvas.height);
 }
 function render(){
- let blur=+document.getElementById("blur").value,wl=+document.getElementById("freq").value,strength=+document.getElementById("strength").value,seed=+document.getElementById("seed").value;
- document.getElementById("blurv").textContent=blur;document.getElementById("freqv").textContent=wl.toFixed(1)+" px";document.getElementById("strengthv").textContent=strength.toFixed(2);document.getElementById("seedv").textContent=seed;
- let core=boxBlur(ref,CW,CH,blur),lum=luminance(core,CW,CH),gg=gradients(lum,CW,CH),frame=normalizeFrame(gg.gx,gg.gy);
+ let blur=+document.getElementById("blur").value,wl=+document.getElementById("freq").value,strength=+document.getElementById("strength").value,warpStrength=+document.getElementById("warp").value,frameSmooth=+document.getElementById("frameSmooth").value,seed=+document.getElementById("seed").value,carrier=document.getElementById("carrier").value;
+ document.getElementById("blurv").textContent=blur;document.getElementById("freqv").textContent=wl.toFixed(1)+" px";document.getElementById("strengthv").textContent=strength.toFixed(2);document.getElementById("warpv").textContent=warpStrength.toFixed(2);document.getElementById("framev").textContent=frameSmooth;document.getElementById("seedv").textContent=seed;
+
+ let core=boxBlur(ref,CW,CH,blur),lum=luminance(core,CW,CH),gg=gradients(lum,CW,CH);
+ let fgx=blurScalar(gg.gx,CW,CH,frameSmooth),fgy=blurScalar(gg.gy,CW,CH,frameSmooth),frame=normalizeFrame(fgx,fgy);
  let trueR=new Float64Array(ref.length);for(let i=0;i<ref.length;i++)trueR[i]=ref[i]-core[i];
- let ri=generatedResidue(frame,"independent",CW,CH,seed,wl,strength),rc=generatedResidue(frame,"conditioned",CW,CH,seed,wl,strength),rs=generatedResidue(frame,"shuffled",CW,CH,seed,wl,strength);
- draw(canv.reference,ref,CW,CH);draw(canv.core,core,CW,CH);draw(canv.trueResidue,residueDisplay(trueR),CW,CH);draw(canv.independent,combine(core,ri),CW,CH);draw(canv.conditioned,combine(core,rc),CW,CH);draw(canv.shuffled,combine(core,rs),CW,CH);
+
+ let fi=makeField(frame,"independent",CW,CH,seed,wl,strength,warpStrength,carrier);
+ let fc=makeField(frame,"conditioned",CW,CH,seed,wl,strength,warpStrength,carrier);
+ let fs=makeField(frame,"shuffled",CW,CH,seed,wl,strength,warpStrength,carrier);
+
+ draw(canv.reference,ref,CW,CH);draw(canv.core,core,CW,CH);draw(canv.trueResidue,residueDisplay(trueR),CW,CH);
+ draw(canv.independent,combine(core,fi.residue),CW,CH);draw(canv.conditioned,combine(core,fc.residue),CW,CH);draw(canv.shuffled,combine(core,fs.residue),CW,CH);
+ draw(canv.phase,wrappedPhaseDisplay(fc.phase),CW,CH);draw(canv.wavevector,scalarDisplay(wavevectorMagnitude(fc.phase,CW,CH)),CW,CH);draw(canv.amplitude,scalarDisplay(fc.amp),CW,CH);
+
  document.getElementById("alignTrue").textContent=alignmentResidue(trueR,frame,CW,CH).toFixed(3);
- document.getElementById("alignIndependent").textContent=alignmentResidue(ri,frame,CW,CH).toFixed(3);
- document.getElementById("alignConditioned").textContent=alignmentResidue(rc,frame,CW,CH).toFixed(3);
- document.getElementById("alignShuffled").textContent=alignmentResidue(rs,frame,CW,CH).toFixed(3);
+ document.getElementById("alignIndependent").textContent=alignmentResidue(fi.residue,frame,CW,CH).toFixed(3);
+ document.getElementById("alignConditioned").textContent=alignmentResidue(fc.residue,frame,CW,CH).toFixed(3);
+ document.getElementById("alignShuffled").textContent=alignmentResidue(fs.residue,frame,CW,CH).toFixed(3);
 }
 function fitImage(img){
  const c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=CW;c.height=CH;ctx.fillStyle="white";ctx.fillRect(0,0,CW,CH);
@@ -192,7 +227,7 @@ function fitImage(img){
  let d=ctx.getImageData(0,0,CW,CH).data,a=new Float64Array(CW*CH*3);for(let i=0;i<CW*CH;i++){a[3*i]=d[4*i]/255;a[3*i+1]=d[4*i+1]/255;a[3*i+2]=d[4*i+2]/255}ref=a;render();
 }
 document.getElementById("file").addEventListener("change",e=>{let f=e.target.files&&e.target.files[0];if(!f)return;let im=new Image;im.onload=()=>{fitImage(im);URL.revokeObjectURL(im.src)};im.src=URL.createObjectURL(f)});
-for(const id of ["blur","freq","strength","seed"])document.getElementById(id).addEventListener("input",render);
+for(const id of ["blur","freq","strength","warp","frameSmooth","seed","carrier"])document.getElementById(id).addEventListener("input",render);
 document.getElementById("reset").addEventListener("click",()=>{ref=syntheticReference(CW,CH);document.getElementById("file").value="";render()});
 render();
 })();

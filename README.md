@@ -231,6 +231,86 @@ shuffled-parent conditioned law
 
 under matched residue energy and spectrum.
 
+## Site Gate 2 — phase-warp banding is the operator showing through
+
+Turning the Gate-1 detail strength up produced a conspicuous twisted stripe field. It looks moiré-adjacent, but the current mechanism does not require two interfering gratings.
+
+The hand-designed residue is approximately
+
+\`\`\`math
+\widehat R_d(x)=a(x)\,s(\phi(x)),
+\`\`\`
+
+with
+
+\`\`\`math
+\phi(x)
+=
+2\pi\left[
+\frac{n(x)\cdot x}{\lambda}
++
+\omega\,\eta_{\mathrm{slow}}(x)
+\right].
+\`\`\`
+
+Here \(n(x)\) comes from the coarse parent's local gradient frame, \(\lambda\) is the detail wavelength, \(\omega\) is phase-warp strength, and \(s\) is the chosen carrier.
+
+When \(n(x)\) changes across space, the phase fronts are not parallel. Their local wavevector is
+
+\`\`\`math
+k(x)=\nabla\phi(x).
+\`\`\`
+
+Large \(\|k(x)\|\) means compressed bands; small \(\|k(x)\|\) means stretched bands. At high residue amplitude those phase fronts stop looking like "detail" and expose the geometry of the transfer law itself.
+
+The live site therefore now shows three internal fields alongside the generated images:
+
+- **wrapped phase** — the phase-front topology directly;
+- **local wavevector magnitude** \(\|\nabla\phi\|\) — where bands compress/stretch;
+- **amplitude envelope** \(a(x)\) — where the parent permits more residue energy.
+
+It also separates three knobs that Gate 1 conflated:
+
+- residue amplitude;
+- phase-warp strength;
+- parent-frame smoothing.
+
+And it lets the carrier change between a single sine, a multi-sine, and a less regular phase-noise field.
+
+This produces a useful attacker. If smoothing the parent frame removes the violent twisting while correct-parent alignment survives, the strongest banding came from rapid pointwise-frame variation rather than from useful natural texture structure. If switching away from the regular multi-sine removes the visible stripes while the correct-parent control still differs from the shuffled-parent control, then the **parent-conditioned relation survives the carrier**.
+
+The current name is deliberately descriptive:
+
+> **phase-warp banding** — a single oscillatory carrier whose phase geometry is spatially deformed by a coarse parent.
+
+This is not claimed to be classical moiré, a natural-image law, or a learned mechanism.
+
+### Why the artifact is useful
+
+The failure mode exposes an architectural distinction:
+
+\`\`\`text
+coarse geometry
+    ↓
+local coordinate / phase law
+    ↓
+carrier
+    ↓
+visible residue
+\`\`\`
+
+Gate 1 established only that a parent field can organize fresh detail. Gate 2 shows that the chosen carrier can dominate the visible result and therefore has to be attacked separately from the parent relation.
+
+The next scientific step is to learn the local residue law from real \((C_{2d},R_d)\) pairs rather than supplying a sinusoidal phase formula. The learned model should be required to beat:
+
+\`\`\`text
+global / independent law
+correct-parent conditioned law
+shuffled-parent conditioned law
+\`\`\`
+
+with matched residue energy and approximately matched marginal spectrum.
+
 ## Run
 
 Install:

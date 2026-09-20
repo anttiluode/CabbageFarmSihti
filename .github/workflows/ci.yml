@@ -1,0 +1,31 @@
+name: CabbageFarmSihti checks
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pytest -q
+      - name: End-to-end demo
+        run: python cabbage_sihti.py demo --size 48 --modes 128 --max-bins 256 --reference-out demo_reference.png --sample-out demo_sample.png --model-out demo_model.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cabbage-farm-sihti-demo
+          path: |
+            demo_reference.png
+            demo_sample.png
+            demo_model.json

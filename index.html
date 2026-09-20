@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CabbageFarmSihti — law + noise → world</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1015;--panel:#131b23;--line:#2b3947;--ink:#edf3f7;--muted:#9aacb9;--a:#9bc7ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+main{max-width:1180px;margin:auto;padding:24px}h1{font-size:clamp(34px,7vw,70px);line-height:.95;letter-spacing:-.05em;margin:.25em 0}
+.lead{font-size:19px;max-width:860px;color:var(--muted)}code,.eq{font-family:ui-monospace,SFMono-Regular,monospace}
+.eq{padding:13px 15px;border:1px solid var(--line);background:var(--panel);border-radius:10px;overflow:auto}
+.controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+label{display:grid;gap:5px;color:var(--muted)}select,button{padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--ink);font:inherit}input{width:100%}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+canvas{width:100%;display:block;background:#06090d;border-radius:7px;image-rendering:pixelated}.small canvas{aspect-ratio:1}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.metric b{display:block;font-size:22px}.metric span{font-size:12px;color:var(--muted)}
+.note{border-left:3px solid var(--a);padding-left:14px;color:var(--muted);max-width:900px;margin-top:22px}a{color:var(--a)}
+@media(max-width:800px){.controls{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:500px){.controls,.metrics{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main>
+<h1>Learn the law.<br>Let noise make the world.</h1>
+<p class="lead">CabbageFarm tried to encode one continuous world. CabbageFarmSihti asks a different question: can a finite texture tell us the stochastic transfer law that makes fields of that kind, then let fresh coordinate-addressable noise generate new territory forever?</p>
+<div class="eq">finite reference → transfer law H(kx,ky) → fresh noise → arbitrarily addressed field</div>
+
+<section class="controls">
+<label>Illustrative law
+<select id="preset">
+<option value="granite">granite-ish isotropic</option>
+<option value="wood">wood-ish anisotropic</option>
+<option value="cloud">cloud-ish 1/f</option>
+<option value="terrain">terrain-ish large-scale</option>
+</select></label>
+<label>Seed <b id="seedv">7</b><input id="seed" type="range" min="0" max="50" value="7"></label>
+<label>Scale <b id="scalev">1.00</b><input id="scale" type="range" min="-12" max="12" value="0"></label>
+<label>Pan x <b id="panv">0</b><input id="pan" type="range" min="-400" max="400" value="0"></label>
+</section>
+
+<div class="grid">
+<div class="card"><canvas id="world" width="760" height="430"></canvas></div>
+<div class="card small"><canvas id="spectrum" width="360" height="360"></canvas>
+<div class="metrics">
+<div class="metric"><b id="modes">192</b><span>continuous Fourier modes</span></div>
+<div class="metric"><b>∞*</b><span>coordinate domain</span></div>
+<div class="metric"><b>0</b><span>tile seams</span></div>
+</div></div>
+</div>
+
+<p class="note"><strong>This browser page is an illustrative procedural field, not a learned result.</strong> The Python code in the repository fits the 2-D spectral law from a real reference image, records a Sihti-style Gaussian residue signature, and then tests whether the simple power-spectrum model is sufficient. If it is not, the next target is cross-octave structure: <code>P(R₂d | R_d)</code>.</p>
+
+<p><a href="https://github.com/anttiluode/CabbageFarmSihti">source</a> · lineage: CabbageFarm + Sihti → Sihti2 → CabbageFarmSihti</p>
+
+<script>
+(()=>{
+const W=760,H=430,M=192;const cv=document.getElementById("world"),ctx=cv.getContext("2d"),sp=document.getElementById("spectrum"),sc=sp.getContext("2d");
+function rng(seed){let x=(seed|0)^0x6d2b79f5;return()=>{x|=0;x=x+0x6D2B79F5|0;let t=Math.imul(x^x>>>15,1|x);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function modes(){
+ const kind=document.getElementById("preset").value,r=rng(+document.getElementById("seed").value+12345),a=[];
+ for(let i=0;i<M;i++){let u=Math.max(1e-4,r()),v=r(),ang=2*Math.PI*v,rad;
+   if(kind==="cloud")rad=.004*Math.pow(u,-.56);
+   else if(kind==="terrain")rad=.0015*Math.pow(u,-.72);
+   else if(kind==="wood")rad=.006+.055*Math.pow(u,1.6);
+   else rad=.01+.12*Math.pow(u,1.2);
+   rad=Math.min(rad,.24);
+   let fx=rad*Math.cos(ang),fy=rad*Math.sin(ang);
+   if(kind==="wood"){fx*=.18;fy*=1.25}
+   let amp;
+   if(kind==="granite")amp=.45/Math.sqrt(M);
+   else amp=.55/Math.sqrt(M)*Math.pow(Math.max(rad,.003),-.12);
+   a.push([fx,fy,2*Math.PI*r(),amp]);
+ } return a;
+}
+function palette(z,kind){
+ z=Math.max(-2.3,Math.min(2.3,z));
+ if(kind==="wood"){let t=.5+.21*z;return [115+90*t,65+65*t,30+32*t]}
+ if(kind==="cloud"){let t=Math.max(0,Math.min(1,.55+.22*z));return [110+140*t,130+125*t,155+100*t]}
+ if(kind==="terrain"){let t=Math.max(0,Math.min(1,.5+.2*z));return [55+145*t,60+130*t,45+95*t]}
+ let t=Math.max(0,Math.min(1,.5+.22*z));return [75+150*t,75+135*t,78+125*t]
+}
+function render(){
+ let md=modes(),kind=document.getElementById("preset").value,scale=Math.pow(2,+document.getElementById("scale").value/6),pan=+document.getElementById("pan").value;
+ let sw=190,sh=Math.round(H*sw/W),tmp=document.createElement("canvas");tmp.width=sw;tmp.height=sh;let tc=tmp.getContext("2d"),im=tc.createImageData(sw,sh);
+ for(let y=0;y<sh;y++)for(let x=0;x<sw;x++){let X=(x*W/sw+pan)*scale,Y=(y*H/sh)*scale,z=0;for(const m of md)z+=m[3]*Math.cos(2*Math.PI*(m[0]*X+m[1]*Y)+m[2]);let c=palette(z,kind),p=4*(y*sw+x);im.data[p]=c[0];im.data[p+1]=c[1];im.data[p+2]=c[2];im.data[p+3]=255}
+ tc.putImageData(im,0,0);ctx.imageSmoothingEnabled=true;ctx.drawImage(tmp,0,0,W,H);
+ sc.fillStyle="#06090d";sc.fillRect(0,0,360,360);sc.fillStyle="#9bc7ff";for(const m of md){let x=180+m[0]*620,y=180+m[1]*620;sc.globalAlpha=.3+Math.min(.7,m[3]*20);sc.fillRect(x,y,2,2)}sc.globalAlpha=1;
+ document.getElementById("seedv").textContent=document.getElementById("seed").value;document.getElementById("scalev").textContent=scale.toFixed(2);document.getElementById("panv").textContent=pan;
+}
+for(const id of ["preset","seed","scale","pan"])document.getElementById(id).addEventListener("input",render);render();
+})();
+</script>
+</main></body></html>

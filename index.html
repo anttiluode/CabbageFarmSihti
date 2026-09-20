@@ -105,7 +105,7 @@ function syntheticReference(w,h){
    let warp=.08*Math.sin(5*th+1.7*r)+.04*Math.sin(11*th-2.1*r);
    let rings=Math.sin(38*(r+warp)+2.2*Math.sin(3*th));
    let folds=Math.sin(18*(r+0.08*Math.sin(4*th))+4*th);
-   let stem=Math.exp(-((x-cx)/(w*.08))**2)*Math.exp(-((y-h*.68)/(h*.33))**4);
+   let stem=Math.exp(-Math.pow((x-cx)/(w*.08),2))*Math.exp(-Math.pow((y-h*.68)/(h*.33),4));
    let n=fbm(x*.05,y*.05,19);
    let structure=edge*(.52+.17*rings+.08*folds+.07*n);
    let p=3*(y*w+x);
@@ -161,10 +161,6 @@ function generatedResidue(frame,mode,w,h,seed,wavelength,strength){
  return out;
 }
 function combine(core,r){let out=new Float64Array(core.length);for(let i=0;i<out.length;i++)out[i]=clamp(core[i]+r[i]);return out}
-function orientationAlignment(detail,frame,w,h){
- const z=luminance(detail.map?detail:new Float64Array(detail),w,h); // typed array accepted below
- return 0;
-}
 function alignmentFromRGB(rgb,frame,w,h){
  const z=luminance(rgb,w,h),g=gradients(z,w,h);let num=0,den=0;
  for(let i=0;i<w*h;i++){let dm=Math.hypot(g.gx[i],g.gy[i]),pm=frame.mag[i];if(dm<1e-5||pm<1e-5)continue;let c=(g.gx[i]*frame.nx[i]+g.gy[i]*frame.ny[i])/dm;let wt=dm*Math.min(pm*60,1);num+=wt*c*c;den+=wt}
@@ -181,7 +177,7 @@ function draw(canvas,a,w,h){
 function render(){
  let blur=+document.getElementById("blur").value,wl=+document.getElementById("freq").value,strength=+document.getElementById("strength").value,seed=+document.getElementById("seed").value;
  document.getElementById("blurv").textContent=blur;document.getElementById("freqv").textContent=wl.toFixed(1)+" px";document.getElementById("strengthv").textContent=strength.toFixed(2);document.getElementById("seedv").textContent=seed;
- let core=boxBlur(ref,CW,CH,blur),lum=luminance(core,CW,CH),frame=normalizeFrame(...Object.values(gradients(lum,CW,CH)));
+ let core=boxBlur(ref,CW,CH,blur),lum=luminance(core,CW,CH),gg=gradients(lum,CW,CH),frame=normalizeFrame(gg.gx,gg.gy);
  let trueR=new Float64Array(ref.length);for(let i=0;i<ref.length;i++)trueR[i]=ref[i]-core[i];
  let ri=generatedResidue(frame,"independent",CW,CH,seed,wl,strength),rc=generatedResidue(frame,"conditioned",CW,CH,seed,wl,strength),rs=generatedResidue(frame,"shuffled",CW,CH,seed,wl,strength);
  draw(canv.reference,ref,CW,CH);draw(canv.core,core,CW,CH);draw(canv.trueResidue,residueDisplay(trueR),CW,CH);draw(canv.independent,combine(core,ri),CW,CH);draw(canv.conditioned,combine(core,rc),CW,CH);draw(canv.shuffled,combine(core,rs),CW,CH);

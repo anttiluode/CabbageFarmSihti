@@ -3,90 +3,202 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CabbageFarmSihti — law + noise → world</title>
+<title>CabbageFarmSihti — coarse geometry → local operator → fresh detail</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1015;--panel:#131b23;--line:#2b3947;--ink:#edf3f7;--muted:#9aacb9;--a:#9bc7ff}
+:root{color-scheme:dark;--bg:#0a0f14;--panel:#121a22;--line:#2a3947;--ink:#edf3f7;--muted:#9badba;--a:#94c4ff;--good:#a8e6b0;--warn:#ffd38a}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
-main{max-width:1180px;margin:auto;padding:24px}h1{font-size:clamp(34px,7vw,70px);line-height:.95;letter-spacing:-.05em;margin:.25em 0}
-.lead{font-size:19px;max-width:860px;color:var(--muted)}code,.eq{font-family:ui-monospace,SFMono-Regular,monospace}
-.eq{padding:13px 15px;border:1px solid var(--line);background:var(--panel);border-radius:10px;overflow:auto}
-.controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
-label{display:grid;gap:5px;color:var(--muted)}select,button{padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--ink);font:inherit}input{width:100%}
-.grid{display:grid;grid-template-columns:2fr 1fr;gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
-canvas{width:100%;display:block;background:#06090d;border-radius:7px;image-rendering:pixelated}.small canvas{aspect-ratio:1}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.metric b{display:block;font-size:22px}.metric span{font-size:12px;color:var(--muted)}
-.note{border-left:3px solid var(--a);padding-left:14px;color:var(--muted);max-width:900px;margin-top:22px}a{color:var(--a)}
-@media(max-width:800px){.controls{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:500px){.controls,.metrics{grid-template-columns:1fr}}
+main{max-width:1280px;margin:auto;padding:24px}h1{font-size:clamp(34px,6.7vw,72px);line-height:.95;letter-spacing:-.05em;margin:.25em 0}
+h2{font-size:26px;margin:1.8em 0 .35em}.lead{font-size:19px;max-width:960px;color:var(--muted)}
+.eq,code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.eq{padding:13px 15px;border:1px solid var(--line);background:var(--panel);border-radius:10px;overflow:auto}
+.controls{display:grid;grid-template-columns:1.35fr repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+label{display:grid;gap:5px;color:var(--muted)}select,button,input[type=file]{padding:9px;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--ink);font:inherit}input[type=range]{width:100%}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
+.card h3{font-size:14px;font-weight:650;color:var(--muted);margin:0 0 8px}.card p{font-size:12px;color:var(--muted);margin:7px 0 0}
+canvas{width:100%;height:auto;display:block;background:#06090d;border-radius:7px;image-rendering:auto}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.metric{border-top:1px solid var(--line);padding-top:8px}.metric b{display:block;font-size:22px}.metric span{font-size:12px;color:var(--muted)}
+.note{border-left:3px solid var(--a);padding:5px 14px;color:var(--muted);max-width:1000px;margin:20px 0}.warning{border-left-color:var(--warn)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row button{cursor:pointer}.badge{font:12px ui-monospace,monospace;border:1px solid var(--line);padding:4px 7px;border-radius:20px;color:var(--muted)}
+a{color:var(--a)}details{margin:26px 0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}summary{cursor:pointer;font-weight:650}
+@media(max-width:950px){.controls{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){main{padding:15px}.controls,.grid,.metrics{grid-template-columns:1fr}}
 </style>
 </head>
 <body><main>
-<h1>Learn the law.<br>Let noise make the world.</h1>
-<p class="lead">CabbageFarm tried to encode one continuous world. CabbageFarmSihti asks a different question: can a finite texture tell us the stochastic transfer law that makes fields of that kind, then let fresh coordinate-addressable noise generate new territory forever?</p>
-<div class="eq">finite reference → transfer law H(kx,ky) → fresh noise → arbitrarily addressed field</div>
+<h1>Keep the geometry.<br>Regrow the detail.</h1>
+<p class="lead">The first spectral generator learned colour and frequency statistics but lost the cabbage because random phase destroyed spatial relations. This page tests the next mechanism directly: preserve a slow coarse field, let that field define a local coordinate frame, then express fresh noise relative to the surviving geometry.</p>
+<div class="eq">coarse state C₂d(x) → local frame [∇C, tangent] → fresh coordinate noise η(x) → conditioned residue R̂d(x) → Ĉd = C₂d + R̂d</div>
+
+<h2>Gate sketch — does parent geometry matter?</h2>
+<p class="lead">Load any image locally, or use the built-in layered synthetic object. Nothing leaves your browser. The reference is blurred into a coarse parent. The same fresh noise is then rendered three ways: independent of the parent, aligned to the parent's local frame, and aligned to a deliberately misbound/shuffled parent field.</p>
 
 <section class="controls">
-<label>Illustrative law
-<select id="preset">
-<option value="granite">granite-ish isotropic</option>
-<option value="wood">wood-ish anisotropic</option>
-<option value="cloud">cloud-ish 1/f</option>
-<option value="terrain">terrain-ish large-scale</option>
-</select></label>
-<label>Seed <b id="seedv">7</b><input id="seed" type="range" min="0" max="50" value="7"></label>
-<label>Scale <b id="scalev">1.00</b><input id="scale" type="range" min="-12" max="12" value="0"></label>
-<label>Pan x <b id="panv">0</b><input id="pan" type="range" min="-400" max="400" value="0"></label>
+<label>Reference image
+<input id="file" type="file" accept="image/*"></label>
+<label>Core blur <b id="blurv">9</b>
+<input id="blur" type="range" min="2" max="24" step="1" value="9"></label>
+<label>Detail wavelength <b id="freqv">8.0 px</b>
+<input id="freq" type="range" min="4" max="22" step=".5" value="8"></label>
+<label>Detail strength <b id="strengthv">0.18</b>
+<input id="strength" type="range" min="0" max=".45" step=".01" value=".18"></label>
+<label>Noise seed <b id="seedv">7</b>
+<input id="seed" type="range" min="0" max="50" step="1" value="7"></label>
 </section>
+<div class="row"><button id="reset">built-in scaffold</button><span class="badge">same noise tape in all three controls</span><span class="badge">shuffled parent = wrong address</span></div>
 
-<div class="grid">
-<div class="card"><canvas id="world" width="760" height="430"></canvas></div>
-<div class="card small"><canvas id="spectrum" width="360" height="360"></canvas>
-<div class="metrics">
-<div class="metric"><b id="modes">192</b><span>continuous Fourier modes</span></div>
-<div class="metric"><b>∞*</b><span>coordinate domain</span></div>
-<div class="metric"><b>0</b><span>tile seams</span></div>
-</div></div>
+<div class="grid" style="margin-top:14px">
+<div class="card"><h3>Reference</h3><canvas id="reference" width="320" height="240"></canvas><p>Observed finite example.</p></div>
+<div class="card"><h3>Coarse parent C₂d</h3><canvas id="core" width="320" height="240"></canvas><p>Slow geometry retained; fine residue removed.</p></div>
+<div class="card"><h3>True bleed-out (reference − core)</h3><canvas id="trueResidue" width="320" height="240"></canvas><p>What the chosen coarse scale actually discarded.</p></div>
+<div class="card"><h3>Independent fresh detail</h3><canvas id="independent" width="320" height="240"></canvas><p>Fresh noise with a fixed global orientation. No parent relation.</p></div>
+<div class="card"><h3>Parent-conditioned detail</h3><canvas id="conditioned" width="320" height="240"></canvas><p>Fresh noise uses the coarse gradient/tangent as its local frame.</p></div>
+<div class="card"><h3>Shuffled-parent attacker</h3><canvas id="shuffled" width="320" height="240"></canvas><p>Same mechanism and same noise, but local frames come from the wrong places.</p></div>
 </div>
 
-<p class="note"><strong>This browser page is an illustrative procedural field, not a learned result.</strong> The Python code in the repository fits the 2-D spectral law from a real reference image, records a Sihti-style Gaussian residue signature, and then tests whether the simple power-spectrum model is sufficient. If it is not, the next target is cross-octave structure: <code>P(R₂d | R_d)</code>.</p>
+<div class="metrics">
+<div class="metric"><b id="alignTrue">—</b><span>true residue ↔ parent-frame alignment</span></div>
+<div class="metric"><b id="alignIndependent">—</b><span>independent generated alignment</span></div>
+<div class="metric"><b id="alignConditioned">—</b><span>conditioned generated alignment</span></div>
+<div class="metric"><b id="alignShuffled">—</b><span>shuffled-parent alignment</span></div>
+</div>
 
-<p><a href="https://github.com/anttiluode/CabbageFarmSihti">source</a> · lineage: CabbageFarm + Sihti → Sihti2 → CabbageFarmSihti</p>
+<p class="note"><strong>What this tests:</strong> not whether we can generate a whole new cabbage yet. It tests the division of labour suggested by Sihti G4: slow structure carries layout; residues carry finer content. If a fresh residue looks more coherent only when its local transfer frame is attached to the correct coarse parent, then the missing object is a cross-scale relation rather than another global power spectrum.</p>
+<p class="note warning"><strong>Important attacker:</strong> the parent-conditioned panel is allowed to keep the real coarse field. That is a scaffold experiment, not object generation. A later gate has to generate the slow core itself. Also, local orientation is hand-designed here; the next scientific step is to measure which parent features actually predict the real residue and learn that transfer rule from data.</p>
+
+<h2>Why this came out of the recent repos</h2>
+<div class="eq">Sihti: core vs residue &nbsp; + &nbsp; Sihti2: geometry is an operator &nbsp; + &nbsp; FrequencyAddressed...: rewrite in the resident basis &nbsp; + &nbsp; AInstein: address/provenance must stay bound</div>
+<p class="lead">The shuffled-parent panel is the crucial control. It keeps the same amount of local geometry and the same fresh noise but binds the detail law to the wrong parent locations. If correct parentage matters, this is the visual analogue of the address-misbinding attackers that killed otherwise confident mechanisms in the recent operator work.</p>
+
+<details>
+<summary>v0 spectral field — the baseline that failed on cabbage shape</summary>
+<p>The original site experiment is retained conceptually: a finite reference can define a stationary 2-D spectral law and fresh random phase can make arbitrarily large fields with matched second-order statistics. That is still useful for granite/cloud-like stationary texture, but phase scrambling showed why it cannot reproduce a structured object such as the cabbage.</p>
+<div class="eq">|H(kx,ky)| + random phase → matched spectrum, not necessarily matched shape</div>
+</details>
+
+<p><a href="https://github.com/anttiluode/CabbageFarmSihti">source</a> · live branch: coarse geometry → local operator → conditioned residue</p>
 
 <script>
 (()=>{
-const W=760,H=430,M=192;const cv=document.getElementById("world"),ctx=cv.getContext("2d"),sp=document.getElementById("spectrum"),sc=sp.getContext("2d");
-function rng(seed){let x=(seed|0)^0x6d2b79f5;return()=>{x|=0;x=x+0x6D2B79F5|0;let t=Math.imul(x^x>>>15,1|x);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-function modes(){
- const kind=document.getElementById("preset").value,r=rng(+document.getElementById("seed").value+12345),a=[];
- for(let i=0;i<M;i++){let u=Math.max(1e-4,r()),v=r(),ang=2*Math.PI*v,rad;
-   if(kind==="cloud")rad=.004*Math.pow(u,-.56);
-   else if(kind==="terrain")rad=.0015*Math.pow(u,-.72);
-   else if(kind==="wood")rad=.006+.055*Math.pow(u,1.6);
-   else rad=.01+.12*Math.pow(u,1.2);
-   rad=Math.min(rad,.24);
-   let fx=rad*Math.cos(ang),fy=rad*Math.sin(ang);
-   if(kind==="wood"){fx*=.18;fy*=1.25}
-   let amp;
-   if(kind==="granite")amp=.45/Math.sqrt(M);
-   else amp=.55/Math.sqrt(M)*Math.pow(Math.max(rad,.003),-.12);
-   a.push([fx,fy,2*Math.PI*r(),amp]);
- } return a;
+const CW=160,CH=120;
+const ids=["reference","core","trueResidue","independent","conditioned","shuffled"];
+const canv={};for(const id of ids)canv[id]=document.getElementById(id);
+let ref=syntheticReference(CW,CH);
+
+function clamp(v,a=0,b=1){return Math.max(a,Math.min(b,v))}
+function hash(ix,iy,seed){
+ let h=(Math.imul(ix|0,374761393)+Math.imul(iy|0,668265263)+Math.imul((seed|0)+1,2246822519))|0;
+ h=Math.imul(h^(h>>>13),1274126177);h^=h>>>16;return (h>>>0)/4294967295;
 }
-function palette(z,kind){
- z=Math.max(-2.3,Math.min(2.3,z));
- if(kind==="wood"){let t=.5+.21*z;return [115+90*t,65+65*t,30+32*t]}
- if(kind==="cloud"){let t=Math.max(0,Math.min(1,.55+.22*z));return [110+140*t,130+125*t,155+100*t]}
- if(kind==="terrain"){let t=Math.max(0,Math.min(1,.5+.2*z));return [55+145*t,60+130*t,45+95*t]}
- let t=Math.max(0,Math.min(1,.5+.22*z));return [75+150*t,75+135*t,78+125*t]
+function smooth(t){return t*t*(3-2*t)}
+function valueNoise(x,y,seed){
+ let x0=Math.floor(x),y0=Math.floor(y),tx=smooth(x-x0),ty=smooth(y-y0);
+ let a=hash(x0,y0,seed),b=hash(x0+1,y0,seed),c=hash(x0,y0+1,seed),d=hash(x0+1,y0+1,seed);
+ return ((a+(b-a)*tx)*(1-ty)+(c+(d-c)*tx)*ty)*2-1;
+}
+function fbm(x,y,seed){
+ let s=0,a=.55,f=1,n=0;for(let o=0;o<4;o++){s+=a*valueNoise(x*f,y*f,seed+o*97);n+=a;a*=.5;f*=2}return s/n;
+}
+function syntheticReference(w,h){
+ const a=new Float64Array(w*h*3),cx=.50*w,cy=.53*h;
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+   let dx=(x-cx)/(w*.37),dy=(y-cy)/(h*.45),r=Math.sqrt(dx*dx+dy*dy),th=Math.atan2(dy,dx);
+   let edge=1/(1+Math.exp((r-1.0)*38));
+   let warp=.08*Math.sin(5*th+1.7*r)+.04*Math.sin(11*th-2.1*r);
+   let rings=Math.sin(38*(r+warp)+2.2*Math.sin(3*th));
+   let folds=Math.sin(18*(r+0.08*Math.sin(4*th))+4*th);
+   let stem=Math.exp(-((x-cx)/(w*.08))**2)*Math.exp(-((y-h*.68)/(h*.33))**4);
+   let n=fbm(x*.05,y*.05,19);
+   let structure=edge*(.52+.17*rings+.08*folds+.07*n);
+   let p=3*(y*w+x);
+   let bg=.985;
+   a[p]=clamp(bg*(1-edge)+edge*(.77+.15*structure+.12*stem));
+   a[p+1]=clamp(bg*(1-edge)+edge*(.82+.16*structure+.09*stem));
+   a[p+2]=clamp(bg*(1-edge)+edge*(.28+.10*structure+.34*stem));
+ }
+ return a;
+}
+function boxBlur(src,w,h,r){
+ let a=new Float64Array(src),tmp=new Float64Array(src.length),out=new Float64Array(src.length);
+ r=Math.max(1,Math.round(r));
+ for(let c=0;c<3;c++){
+  for(let y=0;y<h;y++){let sum=0;for(let x=-r;x<=r;x++){let xx=Math.max(0,Math.min(w-1,x));sum+=a[3*(y*w+xx)+c]}
+   for(let x=0;x<w;x++){tmp[3*(y*w+x)+c]=sum/(2*r+1);let xl=Math.max(0,x-r),xr=Math.min(w-1,x+r+1);sum+=a[3*(y*w+xr)+c]-a[3*(y*w+xl)+c]}
+  }
+  for(let x=0;x<w;x++){let sum=0;for(let y=-r;y<=r;y++){let yy=Math.max(0,Math.min(h-1,y));sum+=tmp[3*(yy*w+x)+c]}
+   for(let y=0;y<h;y++){out[3*(y*w+x)+c]=sum/(2*r+1);let yt=Math.max(0,y-r),yb=Math.min(h-1,y+r+1);sum+=tmp[3*(yb*w+x)+c]-tmp[3*(yt*w+x)+c]}
+  }
+ }
+ return out;
+}
+function luminance(a,w,h){let z=new Float64Array(w*h);for(let i=0;i<w*h;i++)z[i]=.2126*a[3*i]+.7152*a[3*i+1]+.0722*a[3*i+2];return z}
+function gradients(z,w,h){
+ let gx=new Float64Array(w*h),gy=new Float64Array(w*h);
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){let xm=Math.max(0,x-1),xp=Math.min(w-1,x+1),ym=Math.max(0,y-1),yp=Math.min(h-1,y+1),i=y*w+x;gx[i]=.5*(z[y*w+xp]-z[y*w+xm]);gy[i]=.5*(z[yp*w+x]-z[ym*w+x])}
+ return {gx,gy};
+}
+function normalizeFrame(gx,gy){
+ let nx=new Float64Array(gx.length),ny=new Float64Array(gx.length),mag=new Float64Array(gx.length);
+ for(let i=0;i<gx.length;i++){let m=Math.hypot(gx[i],gy[i]);mag[i]=m;if(m>1e-5){nx[i]=gx[i]/m;ny[i]=gy[i]/m}else{nx[i]=1;ny[i]=0}}
+ return {nx,ny,mag};
+}
+function residueDisplay(r){
+ let q=[];for(let i=0;i<r.length;i++)q.push(Math.abs(r[i]));q.sort((a,b)=>a-b);let s=q[Math.floor(.985*q.length)]||1,out=new Float64Array(r.length);
+ for(let i=0;i<r.length;i++)out[i]=clamp(.5+.48*r[i]/s);return out;
+}
+function generatedResidue(frame,mode,w,h,seed,wavelength,strength){
+ let out=new Float64Array(w*h*3),phaseSeed=seed+337,shiftX=37,shiftY=29;
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+   let i=y*w+x,fi=i;
+   if(mode==="shuffled")fi=((y+shiftY)%h)*w+((x+shiftX)%w);
+   let nx,ny;
+   if(mode==="independent"){let ang=.63;nx=Math.cos(ang);ny=Math.sin(ang)}
+   else{nx=frame.nx[fi];ny=frame.ny[fi]}
+   let slow=fbm(x*.045,y*.045,phaseSeed),phase=2*Math.PI*((nx*x+ny*y)/wavelength+.22*slow);
+   let carrier=Math.sin(phase)+.36*Math.sin(2.07*phase+1.7)+.18*Math.sin(3.9*phase-.4);
+   let edgeBoost=.55+.75*Math.min(1,frame.mag[i]*95);
+   let v=strength*edgeBoost*carrier/1.54;
+   out[3*i]=v*.72;out[3*i+1]=v*.82;out[3*i+2]=v*.38;
+ }
+ return out;
+}
+function combine(core,r){let out=new Float64Array(core.length);for(let i=0;i<out.length;i++)out[i]=clamp(core[i]+r[i]);return out}
+function orientationAlignment(detail,frame,w,h){
+ const z=luminance(detail.map?detail:new Float64Array(detail),w,h); // typed array accepted below
+ return 0;
+}
+function alignmentFromRGB(rgb,frame,w,h){
+ const z=luminance(rgb,w,h),g=gradients(z,w,h);let num=0,den=0;
+ for(let i=0;i<w*h;i++){let dm=Math.hypot(g.gx[i],g.gy[i]),pm=frame.mag[i];if(dm<1e-5||pm<1e-5)continue;let c=(g.gx[i]*frame.nx[i]+g.gy[i]*frame.ny[i])/dm;let wt=dm*Math.min(pm*60,1);num+=wt*c*c;den+=wt}
+ return den?num/den:0;
+}
+function alignmentResidue(res,frame,w,h){
+ let rgb=new Float64Array(res.length);for(let i=0;i<res.length;i++)rgb[i]=.5+res[i];return alignmentFromRGB(rgb,frame,w,h);
+}
+function draw(canvas,a,w,h){
+ let ctx=canvas.getContext("2d"),tmp=document.createElement("canvas");tmp.width=w;tmp.height=h;let tc=tmp.getContext("2d"),im=tc.createImageData(w,h);
+ for(let i=0;i<w*h;i++){im.data[4*i]=Math.round(255*clamp(a[3*i]));im.data[4*i+1]=Math.round(255*clamp(a[3*i+1]));im.data[4*i+2]=Math.round(255*clamp(a[3*i+2]));im.data[4*i+3]=255}
+ tc.putImageData(im,0,0);ctx.imageSmoothingEnabled=true;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(tmp,0,0,canvas.width,canvas.height);
 }
 function render(){
- let md=modes(),kind=document.getElementById("preset").value,scale=Math.pow(2,+document.getElementById("scale").value/6),pan=+document.getElementById("pan").value;
- let sw=190,sh=Math.round(H*sw/W),tmp=document.createElement("canvas");tmp.width=sw;tmp.height=sh;let tc=tmp.getContext("2d"),im=tc.createImageData(sw,sh);
- for(let y=0;y<sh;y++)for(let x=0;x<sw;x++){let X=(x*W/sw+pan)*scale,Y=(y*H/sh)*scale,z=0;for(const m of md)z+=m[3]*Math.cos(2*Math.PI*(m[0]*X+m[1]*Y)+m[2]);let c=palette(z,kind),p=4*(y*sw+x);im.data[p]=c[0];im.data[p+1]=c[1];im.data[p+2]=c[2];im.data[p+3]=255}
- tc.putImageData(im,0,0);ctx.imageSmoothingEnabled=true;ctx.drawImage(tmp,0,0,W,H);
- sc.fillStyle="#06090d";sc.fillRect(0,0,360,360);sc.fillStyle="#9bc7ff";for(const m of md){let x=180+m[0]*620,y=180+m[1]*620;sc.globalAlpha=.3+Math.min(.7,m[3]*20);sc.fillRect(x,y,2,2)}sc.globalAlpha=1;
- document.getElementById("seedv").textContent=document.getElementById("seed").value;document.getElementById("scalev").textContent=scale.toFixed(2);document.getElementById("panv").textContent=pan;
+ let blur=+document.getElementById("blur").value,wl=+document.getElementById("freq").value,strength=+document.getElementById("strength").value,seed=+document.getElementById("seed").value;
+ document.getElementById("blurv").textContent=blur;document.getElementById("freqv").textContent=wl.toFixed(1)+" px";document.getElementById("strengthv").textContent=strength.toFixed(2);document.getElementById("seedv").textContent=seed;
+ let core=boxBlur(ref,CW,CH,blur),lum=luminance(core,CW,CH),frame=normalizeFrame(...Object.values(gradients(lum,CW,CH)));
+ let trueR=new Float64Array(ref.length);for(let i=0;i<ref.length;i++)trueR[i]=ref[i]-core[i];
+ let ri=generatedResidue(frame,"independent",CW,CH,seed,wl,strength),rc=generatedResidue(frame,"conditioned",CW,CH,seed,wl,strength),rs=generatedResidue(frame,"shuffled",CW,CH,seed,wl,strength);
+ draw(canv.reference,ref,CW,CH);draw(canv.core,core,CW,CH);draw(canv.trueResidue,residueDisplay(trueR),CW,CH);draw(canv.independent,combine(core,ri),CW,CH);draw(canv.conditioned,combine(core,rc),CW,CH);draw(canv.shuffled,combine(core,rs),CW,CH);
+ document.getElementById("alignTrue").textContent=alignmentResidue(trueR,frame,CW,CH).toFixed(3);
+ document.getElementById("alignIndependent").textContent=alignmentResidue(ri,frame,CW,CH).toFixed(3);
+ document.getElementById("alignConditioned").textContent=alignmentResidue(rc,frame,CW,CH).toFixed(3);
+ document.getElementById("alignShuffled").textContent=alignmentResidue(rs,frame,CW,CH).toFixed(3);
 }
-for(const id of ["preset","seed","scale","pan"])document.getElementById(id).addEventListener("input",render);render();
+function fitImage(img){
+ const c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=CW;c.height=CH;ctx.fillStyle="white";ctx.fillRect(0,0,CW,CH);
+ let s=Math.min(CW/img.width,CH/img.height),dw=img.width*s,dh=img.height*s;ctx.drawImage(img,(CW-dw)/2,(CH-dh)/2,dw,dh);
+ let d=ctx.getImageData(0,0,CW,CH).data,a=new Float64Array(CW*CH*3);for(let i=0;i<CW*CH;i++){a[3*i]=d[4*i]/255;a[3*i+1]=d[4*i+1]/255;a[3*i+2]=d[4*i+2]/255}ref=a;render();
+}
+document.getElementById("file").addEventListener("change",e=>{let f=e.target.files&&e.target.files[0];if(!f)return;let im=new Image;im.onload=()=>{fitImage(im);URL.revokeObjectURL(im.src)};im.src=URL.createObjectURL(f)});
+for(const id of ["blur","freq","strength","seed"])document.getElementById(id).addEventListener("input",render);
+document.getElementById("reset").addEventListener("click",()=>{ref=syntheticReference(CW,CH);document.getElementById("file").value="";render()});
+render();
 })();
 </script>
 </main></body></html>

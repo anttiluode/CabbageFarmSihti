@@ -12,7 +12,7 @@ CabbageFarmSihti asks instead:
 
 The immediate ancestry is:
 
-\`\`\`text
+```text
 CabbageFarm
     continuous coordinate field / infinite-query ambition
           \
@@ -22,7 +22,7 @@ CabbageFarm
           /
 Sihti -> Sihti2
 purifier / residue / transfer-law view
-\`\`\`
+```
 
 The first version is deliberately conservative. It does **not** claim that Sihti residues magically solve texture synthesis. It starts with the strongest conventional attacker: a stationary Gaussian random field whose 2-D power spectrum is learned from the reference. Only after that baseline is measured do cross-octave / nonlinear Sihti relations earn a role.
 
@@ -30,45 +30,45 @@ The first version is deliberately conservative. It does **not** claim that Sihti
 
 For a stationary linear field
 
-\`\`\`math
+```math
 Y = H * \xi,
-\`\`\`
+```
 
-with white noise \(\xi\),
+with white noise $`\xi`$,
 
-\`\`\`math
+```math
 S_Y(k)=|H(k)|^2 S_\xi(k)=|H(k)|^2.
-\`\`\`
+```
 
 So the reference power spectrum gives a transfer law. CabbageFarmSihti fits that law in a PCA colour basis and interprets the normalized spectral power as a distribution over continuous spatial frequencies.
 
 A new field is then generated as random Fourier features:
 
-\`\`\`math
+```math
 z_c(x)
 =
 \sqrt{\frac{2v_c}{M}}
 \sum_{m=1}^{M}
 \cos\!\left(2\pi k_{cm}\cdot x+\phi_{cm}\right),
-\`\`\`
+```
 
 where
 
-- \(v_c\) is the reference variance of PCA colour component \(c\),
-- \(k_{cm}\) is sampled from that component's learned 2-D spectral density,
-- \(\phi_{cm}\) is fresh random phase.
+- $`v_c`$ is the reference variance of PCA colour component $`c`$,
+- $`k_{cm}`$ is sampled from that component's learned 2-D spectral density,
+- $`\phi_{cm}`$ is fresh random phase.
 
 The frequencies are jittered continuously inside the finite reference's Fourier cells. The generated field is therefore defined directly at coordinates instead of as a repeated reference-sized tile.
 
 That gives the first useful distinction from the old CabbageFarm:
 
-\`\`\`text
+```text
 CabbageFarm:
 finite image -> function approximating that particular image
 
 CabbageFarmSihti:
 finite image -> stochastic law -> new fields drawn from that law
-\`\`\`
+```
 
 ## Coordinate-addressable means overlap must agree
 
@@ -76,15 +76,15 @@ A procedural field is not "infinite" merely because a program can make a huge bi
 
 For fixed model, seed and mode count,
 
-\`\`\`python
+```python
 crop(x=100, y=50, w=256, h=256)
-\`\`\`
+```
 
 and
 
-\`\`\`python
+```python
 crop(x=228, y=50, w=256, h=256)
-\`\`\`
+```
 
 must return identical values on their overlapping coordinates.
 
@@ -92,39 +92,39 @@ The test suite checks this directly. There is no hidden tile index in the genera
 
 ## Why Sihti is still in the name
 
-For a frozen purifier \(T\),
+For a frozen purifier $`T`$,
 
-\`\`\`math
+```math
 R_d=T^d(I-T^d)x.
-\`\`\`
+```
 
-In one eigenmode \(T\phi=g\phi\),
+In one eigenmode $`T\phi=g\phi`$,
 
-\`\`\`math
+```math
 R_d^{(\phi)}
 =
 c\,g^d(1-g^d)\phi.
-\`\`\`
+```
 
 So bleed-out noise is not just "detail." It is a band-pass measurement over **relaxation lifetime**.
 
 Adjacent octave residues are deterministically related:
 
-\`\`\`math
+```math
 R_{2d}=T^d(I+T^d)R_d.
-\`\`\`
+```
 
 That suggests a richer generator than plain spectral matching:
 
-\`\`\`math
+```math
 P(R_{2d}\mid R_d),
-\`\`\`
+```
 
 or a learned scale-transfer operator
 
-\`\`\`math
+```math
 R_{2d}\approx A_dR_d.
-\`\`\`
+```
 
 But there is an important kill condition:
 
@@ -142,16 +142,16 @@ The progression is deliberately staged.
 
 Learn
 
-\`\`\`math
+```math
 |H(k_x,k_y)|.
-\`\`\`
+```
 
 This can already encode:
 
 - characteristic feature sizes,
 - anisotropy,
 - preferred directions,
-- broad \(1/f^\beta\)-like scaling.
+- broad $`1/f^\beta`$-like scaling.
 
 It cannot generally encode the phase organization that distinguishes veins, sparse edges, branching, repeated motifs or coherent local geometry.
 
@@ -159,9 +159,9 @@ It cannot generally encode the phase organization that distinguishes veins, spar
 
 Measure
 
-\`\`\`math
+```math
 R_1,R_2,R_4,R_8,\ldots
-\`\`\`
+```
 
 and ask how much energy dies at each scale.
 
@@ -169,9 +169,9 @@ and ask how much energy dies at each scale.
 
 Ask whether structure at one lifetime predicts structure at the next:
 
-\`\`\`math
+```math
 P(R_{2d}\mid R_d).
-\`\`\`
+```
 
 Now the object is not one band but **how bands develop into one another**.
 
@@ -179,9 +179,9 @@ Now the object is not one band but **how bands develop into one another**.
 
 Replace one global law with something like
 
-\`\`\`math
+```math
 H(x,y,k_x,k_y),
-\`\`\`
+```
 
 or an operator written by a slower field.
 
@@ -195,7 +195,7 @@ The live site now tests a narrower mechanism before attempting whole-object gene
 
 https://anttiluode.github.io/CabbageFarmSihti/
 
-1. blur the reference into a slow **coarse parent** \(C_{2d}\);
+1. blur the reference into a slow **coarse parent** $`C_{2d}`$;
 2. compute its local gradient/tangent frame;
 3. generate fresh coordinate noise;
 4. express that noise relative to the local parent frame;
@@ -203,7 +203,7 @@ https://anttiluode.github.io/CabbageFarmSihti/
 
 The sketch is
 
-\`\`\`math
+```math
 C_{2d}(x)
 \longrightarrow
 G_{2d}(x)=[\nabla C,\text{tangent}]
@@ -211,7 +211,7 @@ G_{2d}(x)=[\nabla C,\text{tangent}]
 \widehat R_d(x)=F(G_{2d}(x),\eta_d(x))
 \longrightarrow
 \widehat C_d=C_{2d}+\widehat R_d.
-\`\`\`
+```
 
 The site reports a simple orientation-inheritance diagnostic: how strongly the generated detail-gradient field aligns with the coarse parent's local normal field. That number is only a mechanism probe, not a perceptual-quality metric.
 
@@ -219,15 +219,15 @@ The important attacker is the shuffled-parent panel. It gets the same fresh nois
 
 This is deliberately a scaffold experiment. The real coarse field is retained, so a recognizable object in the reconstruction does **not** mean the object has been generated. The gate asks only whether a slow parent can causally organize fresh finer-scale structure.
 
-The next scientific version should learn \(F\) from the actual reference residues rather than hand-designing the local orientation rule, then compare:
+The next scientific version should learn $`F`$ from the actual reference residues rather than hand-designing the local orientation rule, then compare:
 
-\`\`\`text
+```text
 independent residue law
 vs
 correct-parent conditioned law
 vs
 shuffled-parent conditioned law
-\`\`\`
+```
 
 under matched residue energy and spectrum.
 
@@ -237,13 +237,13 @@ Turning the Gate-1 detail strength up produced a conspicuous twisted stripe fiel
 
 The hand-designed residue is approximately
 
-\`\`\`math
+```math
 \widehat R_d(x)=a(x)\,s(\phi(x)),
-\`\`\`
+```
 
 with
 
-\`\`\`math
+```math
 \phi(x)
 =
 2\pi\left[
@@ -251,23 +251,23 @@ with
 +
 \omega\,\eta_{\mathrm{slow}}(x)
 \right].
-\`\`\`
+```
 
-Here \(n(x)\) comes from the coarse parent's local gradient frame, \(\lambda\) is the detail wavelength, \(\omega\) is phase-warp strength, and \(s\) is the chosen carrier.
+Here $`n(x)`$ comes from the coarse parent's local gradient frame, $`\lambda`$ is the detail wavelength, $`\omega`$ is phase-warp strength, and $`s`$ is the chosen carrier.
 
-When \(n(x)\) changes across space, the phase fronts are not parallel. Their local wavevector is
+When $`n(x)`$ changes across space, the phase fronts are not parallel. Their local wavevector is
 
-\`\`\`math
+```math
 k(x)=\nabla\phi(x).
-\`\`\`
+```
 
-Large \(\|k(x)\|\) means compressed bands; small \(\|k(x)\|\) means stretched bands. At high residue amplitude those phase fronts stop looking like "detail" and expose the geometry of the transfer law itself.
+Large $`\|k(x)\|`$ means compressed bands; small $`\|k(x)\|`$ means stretched bands. At high residue amplitude those phase fronts stop looking like "detail" and expose the geometry of the transfer law itself.
 
 The live site therefore now shows three internal fields alongside the generated images:
 
 - **wrapped phase** — the phase-front topology directly;
-- **local wavevector magnitude** \(\|\nabla\phi\|\) — where bands compress/stretch;
-- **amplitude envelope** \(a(x)\) — where the parent permits more residue energy.
+- **local wavevector magnitude** $`\|\nabla\phi\|`$ — where bands compress/stretch;
+- **amplitude envelope** $`a(x)`$ — where the parent permits more residue energy.
 
 It also separates three knobs that Gate 1 conflated:
 
@@ -289,7 +289,7 @@ This is not claimed to be classical moiré, a natural-image law, or a learned me
 
 The failure mode exposes an architectural distinction:
 
-\`\`\`text
+```text
 coarse geometry
     ↓
 local coordinate / phase law
@@ -297,17 +297,17 @@ local coordinate / phase law
 carrier
     ↓
 visible residue
-\`\`\`
+```
 
 Gate 1 established only that a parent field can organize fresh detail. Gate 2 shows that the chosen carrier can dominate the visible result and therefore has to be attacked separately from the parent relation.
 
-The next scientific step is to learn the local residue law from real \((C_{2d},R_d)\) pairs rather than supplying a sinusoidal phase formula. The learned model should be required to beat:
+The next scientific step is to learn the local residue law from real $`(C_{2d},R_d)`$ pairs rather than supplying a sinusoidal phase formula. The learned model should be required to beat:
 
-\`\`\`text
+```text
 global / independent law
 correct-parent conditioned law
 shuffled-parent conditioned law
-\`\`\`
+```
 
 with matched residue energy and approximately matched marginal spectrum.
 
@@ -315,37 +315,37 @@ with matched residue energy and approximately matched marginal spectrum.
 
 Install:
 
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 
 Fit a reference:
 
-\`\`\`bash
+```bash
 python cabbage_sihti.py fit reference.jpg model.json --max-size 256 --max-bins 4096
-\`\`\`
+```
 
 Generate a fresh field:
 
-\`\`\`bash
+```bash
 python cabbage_sihti.py synth model.json generated.png \
   --width 768 --height 512 --seed 7 --modes 768
-\`\`\`
+```
 
 Generate another crop from the **same global field**:
 
-\`\`\`bash
+```bash
 python cabbage_sihti.py synth model.json crop.png \
   --width 512 --height 512 \
   --origin-x 10000 --origin-y -3000 \
   --seed 7 --modes 768
-\`\`\`
+```
 
 Compare a generated sample with the reference:
 
-\`\`\`bash
+```bash
 python cabbage_sihti.py compare reference.jpg generated.png
-\`\`\`
+```
 
 The comparison reports:
 
@@ -359,12 +359,12 @@ The comparison reports:
 
 Use references from qualitatively different material families:
 
-\`\`\`text
+```text
 granite
 wood
 cloud
 terrain
-\`\`\`
+```
 
 Fit each law and apply all four to fresh noise.
 
@@ -374,7 +374,7 @@ The first question is not whether the output "looks cool." It is:
 
 A useful matrix is:
 
-\`\`\`text
+```text
                         PSD      octave energy    cross-octave spatial relation
 Gaussian texture        pass         pass                 pass/irrelevant
 granite                 ?            ?                    ?
@@ -382,7 +382,7 @@ wood                    ?            ?                    ?
 cloud                   ?            ?                    ?
 terrain                 ?            ?                    ?
 phase-scrambled ref     pass         pass                 should expose the limit
-\`\`\`
+```
 
 If spectrum alone works, that is a successful simple generator and Sihti adds no mechanism yet.
 
@@ -405,12 +405,12 @@ That is not a nuisance; it is the experimental ladder for this repo.
 
 ## Files
 
-\`\`\`text
+```text
 cabbage_sihti.py              fit / synth / compare CLI
 tests/test_cabbage_sihti.py   coordinate and transfer-law invariants
 index.html                    browser explanation + procedural field viewer
 requirements.txt
-\`\`\`
+```
 
 ## North star
 
@@ -420,7 +420,7 @@ The old Cabbage question was:
 
 This branch asks a more physical question:
 
-\`\`\`text
+```text
 finite example
       |
       v
@@ -431,7 +431,7 @@ fresh coordinate-addressable noise
       |
       v
 new arbitrarily large field with the learned multiscale character
-\`\`\`
+```
 
 The reference contributes the law.
 
